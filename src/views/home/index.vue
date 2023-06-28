@@ -13,6 +13,9 @@
 						<Dropdown></Dropdown>
 					</div>
 				</div>
+				<el-scrollbar class="tag-box">
+					<RouterTag></RouterTag>
+				</el-scrollbar>
 			</nav>
 			<div class="content_box">
 				<el-scrollbar>
@@ -36,6 +39,7 @@ import { reactive } from 'vue'
 import Menu from '@/components/Menu/index.vue'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Dropdown from '@/components/Dropdown/index.vue'
+import RouterTag from '@/components/RouterTag/index.vue'
 
 //获取本地存储的折叠状态
 const getCollapsed = () => {
@@ -77,6 +81,8 @@ $navHeight: 84px;
 		nav {
 			height: $navHeight;
 			box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
 
 			.nav_top {
 				height: 50px;
@@ -97,6 +103,15 @@ $navHeight: 84px;
 					align-items: center;
 					justify-content: flex-end;
 				}
+			}
+
+			.tag-box {
+				width: calc(100% - 60px);
+				height: 34px;
+				margin: 0 auto;
+				display: flex;
+        padding-top: 3px;
+        box-sizing: border-box;
 			}
 		}
 	}

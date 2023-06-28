@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { staticRoutes } from '@/router'
+import { landRoute } from '@/router/landRoute'
 
 const finalRoutes = staticRoutes //最终路由数据(映射路由表)
 
@@ -9,12 +10,12 @@ const loadView = (view: any) => {
 	return () => import('@/views' + view)
 }
 
-//将路由指向Layout
+// 将路由指向Layout
 const loadLayout = () => {
 	return () => import('@/components/Layout/index.vue')
 }
 
-//递归修改路由函数
+// 递归修改路由函数
 const filterAsyncRoutes = (routes: any) => {
 	for (const i in routes) {
 		if (routes[i].component === 'Layout') {
@@ -28,21 +29,6 @@ const filterAsyncRoutes = (routes: any) => {
 	}
 }
 
-// 必要的路由
-const landRoute = [
-	{
-		path: '/index',
-		name: 'index',
-		component: '/index/index.vue',
-		meta: {
-			hidden: false,
-			title: '首页',
-			icon: 'House',
-		},
-		children: [],
-	},
-]
-
 const userStore = defineStore({
 	id: 'userStore',
 	state: () => ({
@@ -51,15 +37,15 @@ const userStore = defineStore({
 	}),
 	getters: {},
 	actions: {
-		//设置路由
+		// 设置路由
 		generateRoutes() {
 			return new Promise((resolve) => {
-				let accessedRoutes = [] //声明一个用于渲染菜单的路由数据
+				let accessedRoutes = [] // 声明一个用于渲染菜单的路由数据
 				if (this.routers) {
 					//深拷贝路由表
 					accessedRoutes = JSON.parse(JSON.stringify(this.routers))
 				}
-				filterAsyncRoutes(accessedRoutes) //过滤component
+				filterAsyncRoutes(accessedRoutes) // 过滤component
 				finalRoutes[0].children = accessedRoutes
 				this.routers = accessedRoutes
 				resolve(finalRoutes)
@@ -106,7 +92,7 @@ const userStore = defineStore({
 								meta: {
 									hidden: false,
 									title: 'test3',
-                  icon: 'StarFilled',
+									icon: 'StarFilled',
 								},
 							},
 						],
