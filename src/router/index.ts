@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-const routes: Array<RouteRecordRaw> = [
+export const staticRoutes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: 'home',
-		component: () =>
-			import(/* webpackChunkName: "home" */ '@/views/home.vue'),
+		component: () => import('@/views/home/index.vue'),
+		redirect: '/index',
+		children: [],
 	},
 	{
 		path: '/login',
 		name: 'login',
-		component: () =>
-			import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
+		component: () => import('@/views/login/index.vue'),
 	},
 	{
 		path: '/:pathMatch(.*)*',
@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
-	routes,
+	routes: staticRoutes,
 })
 
 export default router

@@ -4,7 +4,7 @@
 			class="left-box"
 			id="three-render-box"
 			v-loading="loading"
-			element-loading-background="#000"
+			element-loading-background="rgba(0,0,0,0)"
 		></div>
 		<div class="right-box">
 			<h1>登录</h1>
@@ -22,7 +22,10 @@
 						prop="username"
 						class="form-item"
 					>
-						<el-input v-model="state.ruleForm.username" class="input" />
+						<el-input
+							v-model="state.ruleForm.username"
+							class="input"
+						/>
 					</el-form-item>
 					<el-form-item
 						label="密码"
@@ -55,11 +58,13 @@
 import { onMounted, ref, reactive } from 'vue'
 import { init } from './model'
 import type { FormInstance } from 'element-plus'
-import userStore from '../../store/user'
+import userStore from '@/store/user'
+import { useRouter } from 'vue-router'
 
 const loading = ref<boolean>(true)
 const ruleFormRef = ref<FormInstance>()
 const user = userStore()
+const router = useRouter()
 
 onMounted(() => {
 	init(loading)
@@ -82,14 +87,16 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return
 	await formEl.validate((valid) => {
 		if (valid) {
-			user.login(state.ruleForm)
+			user.login(state.ruleForm).then(() => {
+				router.push({ path: '/' })
+			})
 		}
 	})
 }
 </script>
 
 <style scoped lang="scss">
-$bg-color: #000;
+$bg-color: linear-gradient(to right, #2bc0e4, #eaecc6);
 
 .home-box {
 	width: 100%;
@@ -101,15 +108,13 @@ $bg-color: #000;
 	background: $bg-color;
 
 	.left-box {
-		width: 65%;
+		width: 60%;
 		height: 100%;
 	}
 
 	.right-box {
 		flex: 1;
 		height: 100%;
-		background: $bg-color;
-		border-left: 1px dashed rgba(255, 255, 255, 0.3);
 
 		h1 {
 			width: 100%;
@@ -121,7 +126,7 @@ $bg-color: #000;
 		.login-box {
 			width: 400px;
 			height: 250px;
-			border: 1px dashed rgba(255, 255, 255, 0.3);
+			border: 2px dashed #73b0fb;
 			border-radius: 10px;
 			margin: 5% auto 0 auto;
 			display: flex;

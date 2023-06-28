@@ -21,19 +21,19 @@ router.beforeEach(async (to: any, from: any, next) => {
 			next({ path: '/' })
 			NProgress.done() //关闭NProgress
 		} else {
-			// 有权限放行
-			if (user.hasAuth) {
+			// 保存在store中路由不为空则放行 (如果执行了刷新操作，则 store 里的路由为空，此时需要重新添加路由)
+			if (user.routers?.length > 0) {
 				next()
 			} else {
 				try {
 					// 然后获取用户信息
 					await user.getInfo()
 					// 根据角色生成可访问的路由图
-					// const accessRoutes = await user.generateRoutes()
+					const accessRoutes: any = await user.generateRoutes()
 					// 动态添加可访问路由
-					// for (const i in accessRoutes) {
-					// 	router.addRoute(accessRoutes[i])
-					// }
+					for (const i in accessRoutes) {
+						router.addRoute(accessRoutes[i])
+					}
 					// hack方法，以确保addRoutes是完整的
 					// 设置replace: true，这样导航就不会留下历史记录
 					next({ ...to, replace: true })

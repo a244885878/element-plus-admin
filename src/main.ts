@@ -24,3 +24,22 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.mount('#app')
+
+// !element-plus出现 ResizeObserver loop limit exceeded错误解决方法
+const debounce = (fn: any, delay: number) => {
+	let timer: any = null
+	return function (...args: any) {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
+			fn.apply(args)
+		}, delay)
+	}
+}
+
+const _ResizeObserver = window.ResizeObserver
+window.ResizeObserver = class ResizeObserver extends _ResizeObserver {
+	constructor(callback: any) {
+		callback = debounce(callback, 16)
+		super(callback)
+	}
+}

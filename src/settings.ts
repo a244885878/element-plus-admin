@@ -1,3 +1,3 @@
 export default {
-  title: ''
+  title: 'element-plus-admin'
 }

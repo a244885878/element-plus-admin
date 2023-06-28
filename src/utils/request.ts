@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ElLoading, ElMessage } from 'element-plus'
-// import userStore from '@/store/user'
+import userStore from '@/store/user'
 import { getToken, TokenKey } from '@/utils/auth'
 
 const baseURL = process.env.VUE_APP_BASE_API
@@ -63,13 +63,13 @@ service.interceptors.response.use(
 			tryHideFullScreenLoading()
 			return res
 		}
-		// const user = userStore()
+		const user = userStore()
 		if (res.code != 200) {
 			ElMessage.error(res.msg || 'error')
 			// 当code为登出时
 			if (res.code === 50008) {
 				// 调用登出方法
-				// user_store.logout()
+				user.logout()
 				ElMessage.error('您已经登出,请重新登录')
 			}
 		}

@@ -22,10 +22,11 @@ export const init = async (loading: any): Promise<void> => {
 	const renderer = new THREE.WebGLRenderer({
 		// 增加下面这个属性，可以抗锯齿
 		antialias: true,
+		alpha: true,
 	})
 	// 设置渲染器的尺寸大小
 	renderer.setSize(threeRenderBox.offsetWidth, threeRenderBox.offsetHeight)
-	renderer.setClearColor('#000', 1) //设置背景颜色
+	// renderer.setClearColor(0x000000, 0) //设置背景颜色
 	threeRenderBox.appendChild(renderer.domElement)
 
 	// 加载模型
