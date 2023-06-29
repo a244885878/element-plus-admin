@@ -3,7 +3,7 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { staticRoutes } from '@/router'
 import { landRoute } from '@/router/landRoute'
 
-const finalRoutes = staticRoutes //最终路由数据(映射路由表)
+const finalRoutes = staticRoutes // 最终路由数据(映射路由表)
 
 // 路由懒加载
 const loadView = (view: any) => {
