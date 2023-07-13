@@ -32,7 +32,10 @@ router.beforeEach(async (to: any, from: any, next) => {
 					const accessRoutes: any = await user.generateRoutes()
 					// 动态添加可访问路由
 					for (const i in accessRoutes) {
-						router.addRoute(accessRoutes[i])
+						// 404路由不再注册
+						if (accessRoutes[i]?.meta?.title !== '404') {
+							router.addRoute(accessRoutes[i])
+						}
 					}
 					// hack方法，以确保addRoutes是完整的
 					// 设置replace: true，这样导航就不会留下历史记录

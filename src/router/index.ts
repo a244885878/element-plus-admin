@@ -15,6 +15,9 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/:pathMatch(.*)*',
+		meta: {
+			title: '404',
+		},
 		component: () => import('@/views/404/index.vue'),
 	},
 ]
